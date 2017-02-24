@@ -15,8 +15,24 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url 'https://dl.bintray.com/oschinaapp/maven/'
+        }
     }
 }
+
+
+ext {
+    compileSdkVersion = 24
+    buildToolsVersion = "24.0.3"
+    applicationId = "net.oschina.app"
+    minSdkVersion = 19
+    targetSdkVersion = 24
+    versionCode = 280
+    versionName = "v2.8.0(1701231104)"
+    supportVersion = '25.1.0'
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

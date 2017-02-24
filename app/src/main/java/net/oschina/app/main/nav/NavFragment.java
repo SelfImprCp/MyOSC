@@ -2,16 +2,12 @@ package net.oschina.app.main.nav;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.view.View;
 
 import net.oschina.app.R;
 import net.oschina.app.base.BaseFragment;
 import net.oschina.app.main.tab.DynamicTabFragment;
+import net.oschina.app.main.tab.TweetViewPagerFragment;
 
 import butterknife.Bind;
 
@@ -69,6 +65,8 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 //
 
         mNavNews.init(R.drawable.tab_icon_new,R.string.main_tab_name_news,DynamicTabFragment.class);
+
+        mNavTweet.init(R.drawable.tab_icon_tweet,R.string.main_tab_name_tweet,TweetViewPagerFragment.class);
 
 
     }

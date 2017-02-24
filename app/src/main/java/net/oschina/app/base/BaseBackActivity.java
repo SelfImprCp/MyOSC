@@ -7,7 +7,8 @@ package net.oschina.app.base;
 public class BaseBackActivity extends BaseActivity {
 
 
-
-
-
+    @Override
+    protected int getContentView() {
+        return 0;
+    }
 }
