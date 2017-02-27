@@ -10,26 +10,25 @@
     <LinearLayout
 
         android:id="@+id/activity_main_ui"
-        android:orientation="vertical"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-         <FrameLayout
-             android:id="@+id/main_container"
-             android:layout_width="match_parent"
-             android:layout_weight="1"
-             android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-         </FrameLayout>
+        <FrameLayout
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </FrameLayout>
 
 
         <fragment
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
             android:id="@+id/fag_nav"
-
-            ></fragment>
+            android:name="net.oschina.app.main.nav.NavFragment"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"></fragment>
 
 
     </LinearLayout>

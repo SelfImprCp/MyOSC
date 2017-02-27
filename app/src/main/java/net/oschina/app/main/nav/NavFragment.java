@@ -1,7 +1,10 @@
 package net.oschina.app.main.nav;
 
-import android.app.FragmentManager;
+
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import net.oschina.app.R;
@@ -9,7 +12,10 @@ import net.oschina.app.base.BaseFragment;
 import net.oschina.app.main.tab.DynamicTabFragment;
 import net.oschina.app.main.tab.TweetViewPagerFragment;
 
+import java.util.List;
+
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by Jerry on 2017/2/23.
@@ -39,7 +45,8 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 
     private OnNavigationReselectListener mOnNavigationReselectListener;
 
-    public  NavFragment(){}
+    public NavFragment() {
+    }
 
     @Override
     protected int getLayoutId() {
@@ -49,7 +56,6 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initWidget(View root) {
-
 
 
         super.initWidget(root);
@@ -64,22 +70,88 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 //        root.setBackgroundDrawable(layerDrawable);
 //
 
-        mNavNews.init(R.drawable.tab_icon_new,R.string.main_tab_name_news,DynamicTabFragment.class);
+        mNavNews.init(R.drawable.tab_icon_new, R.string.main_tab_name_news, DynamicTabFragment.class);
 
-        mNavTweet.init(R.drawable.tab_icon_tweet,R.string.main_tab_name_tweet,TweetViewPagerFragment.class);
+        mNavTweet.init(R.drawable.tab_icon_tweet, R.string.main_tab_name_tweet, TweetViewPagerFragment.class);
 
 
     }
 
+    @OnClick({R.id.nav_item_news, R.id.nav_item_tweet, R.id.nav_item_explore, R.id.nav_item_me, R.id.nav_item_tweet_pub})
     @Override
     public void onClick(View view) {
 
+        if (view instanceof NavigationButton) {
+
+            NavigationButton nav = (NavigationButton) view;
+            doSelect(nav);
+
+        } else if (view.getId() == R.id.nav_item_tweet_pub) {
+
+        }
+
+
+    }
+
+    private void doSelect(NavigationButton mNavNews) {
+
+        NavigationButton oldNavButton = null;
+        if (mCurrentNavButton != null) {
+
+            oldNavButton = mCurrentNavButton;
+            if (oldNavButton == mNavNews) {
+
+                onReselect(oldNavButton);
+                return;
+
+            }
+
+            oldNavButton.setSelected(false);
+
+        }
+        mNavNews.setSelected(true);
+        doTabChanged(oldNavButton, mNavNews);
+
+        mCurrentNavButton = mNavNews;
+
+
     }
 
 
+    private void doTabChanged(NavigationButton oldNavButton, NavigationButton newNavButton) {
+
+    }
+
+
+    public void setUp(Context context, FragmentManager fragmentManager, int contentId, OnNavigationReselectListener listener) {
+        mContext = context;
+        mFragmentManager = fragmentManager;
+        mContainerId = contentId;
+        mOnNavigationReselectListener = listener;
+
+        clearOldFragment();
+        doSelect(mNavNews);
+
+    }
+
+
+    private void onReselect(NavigationButton navigationButton) {
+        OnNavigationReselectListener listener = mOnNavigationReselectListener;
+        if (listener != null) {
+            listener.onReselect(navigationButton);
+        }
+
+    }
 
     public interface OnNavigationReselectListener {
         void onReselect(NavigationButton navigationButton);
+    }
+
+    private void clearOldFragment() {
+
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        List<Fragment> fragmentList = mFragmentManager.getFragments();
+
     }
 
 }

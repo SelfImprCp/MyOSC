@@ -9,12 +9,18 @@
     </style>
 
 
+    <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/black_alpha_240</item>
+
+    </style>
+
+    <style name="Base.App.Theme.NoTitle" parent="App.Theme.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 
-     <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert" >
-          <item name="android:textColorPrimary">@color/black_alpha_240</item>
-
-     </style>
+    <style name="App.Theme.Main" parent="Base.App.Theme.NoTitle"></style>
 
 
 </resources>

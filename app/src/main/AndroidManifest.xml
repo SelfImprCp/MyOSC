@@ -8,20 +8,27 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        tools:replace="android:allowBackup"
-        android:theme="@style/App.Theme.Light">
+        android:theme="@style/App.Theme.Light"
+        tools:replace="android:allowBackup">
         <activity
             android:name=".ui.LauchActivity"
             android:label="@string/app_name"
-            android:theme="@style/App.Theme.Launch"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/App.Theme.Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".main.MainActivity"
+
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/App.Theme.Main"></activity>
     </application>
 
 </manifest>
