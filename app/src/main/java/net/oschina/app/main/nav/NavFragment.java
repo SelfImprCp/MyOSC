@@ -93,6 +93,60 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+
+    public void setUp(Context context, FragmentManager fragmentManager, int contentId, OnNavigationReselectListener listener) {
+        mContext = context;
+        mFragmentManager = fragmentManager;
+        mContainerId = contentId;
+        mOnNavigationReselectListener = listener;
+
+        clearOldFragment();
+        doSelect(mNavNews);
+
+    }
+
+
+    public void select(int index) {
+
+
+    }
+
+    private void onReselect(NavigationButton navigationButton) {
+        OnNavigationReselectListener listener = mOnNavigationReselectListener;
+        if (listener != null) {
+            listener.onReselect(navigationButton);
+        }
+
+    }
+
+    public interface OnNavigationReselectListener {
+        void onReselect(NavigationButton navigationButton);
+    }
+
+    private void clearOldFragment() {
+
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        List<Fragment> fragmentList = mFragmentManager.getFragments();
+
+
+        if (transaction == null || fragmentList == null || fragmentList.size() == 0)
+            return;
+
+        boolean doCommit = false;
+        for (Fragment fragment : fragmentList) {
+            if (fragment != this) {
+                transaction.remove(fragment);
+                doCommit = true;
+            }
+
+        }
+        if (doCommit)
+            transaction.commitNow();
+
+
+    }
+
+
     private void doSelect(NavigationButton mNavNews) {
 
         NavigationButton oldNavButton = null;
@@ -117,41 +171,30 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-
     private void doTabChanged(NavigationButton oldNavButton, NavigationButton newNavButton) {
 
-    }
-
-
-    public void setUp(Context context, FragmentManager fragmentManager, int contentId, OnNavigationReselectListener listener) {
-        mContext = context;
-        mFragmentManager = fragmentManager;
-        mContainerId = contentId;
-        mOnNavigationReselectListener = listener;
-
-        clearOldFragment();
-        doSelect(mNavNews);
-
-    }
-
-
-    private void onReselect(NavigationButton navigationButton) {
-        OnNavigationReselectListener listener = mOnNavigationReselectListener;
-        if (listener != null) {
-            listener.onReselect(navigationButton);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        if (oldNavButton != null) {
+            if (oldNavButton.getFragment() != null) {
+                ft.detach(oldNavButton.getFragment());
+            }
         }
 
+        if (newNavButton != null) {
+            if (newNavButton.getFragment() == null) {
+                Fragment fragment = Fragment.instantiate(mContext, newNavButton.getClx().getName(), null);
+                ft.add(mContainerId, fragment, newNavButton.getTag());
+                newNavButton.setFragment(fragment);
+
+
+            } else {
+                ft.attach(newNavButton.getFragment());
+            }
+
+        }
+        ft.commit();
+
     }
 
-    public interface OnNavigationReselectListener {
-        void onReselect(NavigationButton navigationButton);
-    }
-
-    private void clearOldFragment() {
-
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        List<Fragment> fragmentList = mFragmentManager.getFragments();
-
-    }
 
 }
